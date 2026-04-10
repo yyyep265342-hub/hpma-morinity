@@ -2,9 +2,8 @@ name: 藏宝阁监控
 
 on:
   schedule:
-    # 每隔 30 分钟运行一次
     - cron: '*/30 * * * *'
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   monitor:
@@ -21,28 +20,26 @@ jobs:
           python-version: '3.11'
       
       - name: 安装依赖
-        run: |
-          pip install requests
+        run: pip install requests
       
       - name: 执行监控脚本
         id: check
         continue-on-error: true
         run: |
           python monitor.py
-          # 将结果保存到 GitHub 输出，供后续步骤使用
           echo "url=https://hp.cbg.163.com/mweb/?search_type=role&gender__or=2&card_list=%5B%7B%22card_list__id%22%3A%221198%22%2C%22card_list__level%22%3A15%7D%5D&wand__and=10000020&rare_cloth__and=10453621%2C10453821%2C10454011%2C10454025%2C10454059%2C10454122&frame__or=4101162" >> $GITHUB_OUTPUT
       
       - name: 发送邮件通知（发现账号时）
         if: steps.check.outcome == 'failure'
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp-mail.outlook.com
+          server_address: smtp.qq.com
           server_port: 587
-          username: ${{ secrets.OUTLOOK_EMAIL }}
-          password: ${{ secrets.OUTLOOK_PASSWORD }}
+          username: 1578823283@qq.com
+          password: ${{ secrets.QQ_AUTH_CODE }}
           subject: 🎉 藏宝阁发现符合条件的哈利波特账号！
           to: 1578823283@qq.com
-          from: ${{ secrets.OUTLOOK_EMAIL }}
+          from: 1578823283@qq.com
           body: |
             你好，
 
