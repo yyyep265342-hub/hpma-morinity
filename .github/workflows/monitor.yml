@@ -30,7 +30,7 @@ jobs:
           echo "url=https://hp.cbg.163.com/mweb/?search_type=role&gender__or=2&card_list=%5B%7B%22card_list__id%22%3A%221198%22%2C%22card_list__level%22%3A15%7D%5D&wand__and=10000020&rare_cloth__and=10453621%2C10453821%2C10454011%2C10454025%2C10454059%2C10454122&frame__or=4101162" >> $GITHUB_OUTPUT
       
       - name: 发送邮件通知（发现账号时）
-        if: steps.check.outcome == 'failure'
+        if: steps.check.outcome == 'success'
         uses: dawidd6/action-send-mail@v4
         with:
           server_address: smtp.qq.com
