@@ -29,18 +29,21 @@ URL = 'https://hp.cbg.163.com/cgi-bin/recommend.py?client_type=h5&act=recommd_by
 def main():
     try:
         resp = requests.post(URL, data=PAYLOAD, headers=HEADERS, timeout=15)
+        print(f'HTTP状态码：{resp.status_code}')
+        print(f'响应内容：{resp.text[:500]}')  # 打印前500字符
         resp.raise_for_status()
         data = resp.json()
         results = data.get('result', [])
         print(f'查询成功，找到 {len(results)} 个符合条件的账号')
         if results:
-            sys.exit(1)  # 有结果，触发邮件通知
+            print('有符合条件的账号，触发通知')
+            sys.exit(1)
         else:
             print('暂无符合条件的账号')
             sys.exit(0)
     except Exception as e:
-        print(f'查询出错：{e}')
-        sys.exit(0)  # 出错不触发通知
+        print(f'查询出错：{type(e).__name__}: {e}')
+        sys.exit(0)  # 出错一律返回0，不触发通知
 
 if __name__ == '__main__':
     main()
