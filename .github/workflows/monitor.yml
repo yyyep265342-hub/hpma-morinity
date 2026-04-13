@@ -39,7 +39,7 @@ jobs:
           password: ${{ secrets.QQ_AUTH_CODE }}
           subject: 🎉 藏宝阁发现符合条件的哈利波特账号！
           to: 1578823283@qq.com
-          from: 藏宝阁监控 <1578823283@qq.com>
+          from: 1578823283@qq.com
           body: |
             你好，
 
